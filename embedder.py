@@ -1,7 +1,15 @@
 import openai
-import chromadb
 import os
 from dotenv import load_dotenv
+
+import os
+
+USE_CHROMA = os.getenv("USE_CHROMA", "true").lower() == "true"
+
+if USE_CHROMA:
+    import chromadb
+    from chromadb.config import Settings
+    chroma_client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory="./chroma_store"))
 
 load_dotenv()
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -12,7 +20,10 @@ def embed_text(text):
         model="text-embedding-ada-002"
     )
     return response.data[0].embedding
+
 def store_tracks_in_vector_db(tracks):
+    if not USE_CHROMA:
+        return
     collection = chroma_client.get_or_create_collection(name="songs")
 
     for i, t in enumerate(tracks):
