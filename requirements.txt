@@ -1,0 +1,5 @@
+streamlit
+spotipy
+openai
+chromadb
+python-dotenv
