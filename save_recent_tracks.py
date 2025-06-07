@@ -1,11 +1,19 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from dotenv import load_dotenv
+import os
 import json
+load_dotenv()
+
+SPOTIPY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
+SPOTIPY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
+#SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback/"
+SPOTIPY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-    client_id="62cb56241f1146f89ef7caf711da9d22",
-    client_secret="f385714ae55f42ce8856702ee6809c20",
-    redirect_uri="http://127.0.0.1:8888/callback/",
+    client_id=SPOTIPY_CLIENT_ID,
+    client_secret=SPOTIPY_CLIENT_SECRET,
+    redirect_uri=SPOTIPY_REDIRECT_URI,
     scope="user-read-recently-played"
 ))
 

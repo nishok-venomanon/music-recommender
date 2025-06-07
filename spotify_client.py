@@ -1,11 +1,13 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 # Replace these with your Spotify app credentials
-SPOTIPY_CLIENT_ID = "62cb56241f1146f89ef7caf711da9d22"
-SPOTIPY_CLIENT_SECRET = "f385714ae55f42ce8856702ee6809c20"
+SPOTIPY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
+SPOTIPY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
 #SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback/"
-SPOTIPY_REDIRECT_URI = "http://127.0.0.1:8888/callback/"
+SPOTIPY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
 
 def create_spotify_client():
     return spotipy.Spotify(auth_manager=SpotifyOAuth(
